@@ -1,15 +1,24 @@
-resource "aws_s3_bucket" "example" {
-  bucket = var.bucket_name
- tags = {
-     app = "frontend132"
-}
+data "aws_ami" "ubuntu" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  owners = ["099720109477"] # Canonical
 }
 
-variable "bucket_name" {
-  type = string
-  default = "new-bucket-121213"
-}
+resource "aws_instance" "example" {
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = "t2.large"
 
-output "bucket_name" {
-  value = aws_s3_bucket.example.bucket
+  tags = {
+    Name = "HelloWorld"
+  }
 }
