@@ -4,6 +4,7 @@ resource "aws_s3_bucket" "example" {
 
 variable "bucket_name" {
   type = string
+  default = "new-bucket-121213"
 }
 
 output "bucket_name" {
