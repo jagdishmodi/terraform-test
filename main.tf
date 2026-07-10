@@ -19,6 +19,6 @@ resource "aws_instance" "example" {
   instance_type = "t2.small"
 
   tags = {
-    Name = "HelloWorld"
+    env = "HelloWorld"
   }
 }
